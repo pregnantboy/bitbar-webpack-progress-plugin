@@ -81,8 +81,12 @@ BitBarWebpackProgressPlugin.prototype.apply = function(compiler) {
 			handler(0.95, "emit");
 			callback();
 		});
-		compiler.plugin("done", function() {
-			handler(1, "");
+		compiler.plugin("done", function(stats) {
+			if (stats.hasErrors()) {
+				handler(-1, "");
+			} else {
+				handler(1, "");				
+			}
 		});
 	}
 };
