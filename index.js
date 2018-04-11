@@ -98,9 +98,9 @@ BitBarWebpackProgressPlugin.prototype.apply = function (compiler) {
 			handler(0.95, "emit");
 			callback();
 		});
-		compiler.hooks.done.tap(pluginName, () => handler(1, function (stats) {
+		compiler.hooks.done.tap(pluginName, (stats) => {
 			if (stats.hasErrors()) {
-				let allErrors = stats.toJson("errors-only").errors;
+				let allErrors = stats.toJson().errors;
 				let atLoaderErrorCount = 0;
 				allErrors.forEach(function (err) {
 					if (err.indexOf('at-loader') !== -1) {
@@ -115,7 +115,7 @@ BitBarWebpackProgressPlugin.prototype.apply = function (compiler) {
 			} else {
 				handler(1, "");
 			}
-		}));
+		});
 	}
 };
 
